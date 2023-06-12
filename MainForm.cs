@@ -3,12 +3,12 @@
 #region using statements
 
 using DataJuggler.UltimateHelper;
+using DataJuggler.UltimateHelper.Objects;
 using DataJuggler.Win.Controls;
 using Timer = System.Timers.Timer;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Collections.ObjectModel;
-using OpenQA.Selenium.Interactions;
 using DataJuggler.PixelDatabase;
 
 #endregion
@@ -31,6 +31,8 @@ namespace BingDownloader
         private int step;
         private DateTime startTime;
         private int imagesCreated;
+        private const int LongDelay = 26000;
+        private int ShortDelay = 1800;
         private const string SiteUrl = "https://bing.com/Create";
         private const string SearchBoxId = "sb_form_q";
         private const string CreateButton = "create_btn_c";
@@ -118,7 +120,7 @@ namespace BingDownloader
                     if (NullHelper.Exists(createButton))
                     {
                         // increase
-                        ProcessTimer.Interval = 30000;
+                        ProcessTimer.Interval = LongDelay;
 
                         // Click the Create Button
                         createButton.Click();
@@ -130,7 +132,7 @@ namespace BingDownloader
                 case 3:
 
                     // decrease
-                    ProcessTimer.Interval = 3000;
+                    ProcessTimer.Interval = ShortDelay;
 
                     // find the searchBox
                     WebElements = Chrome.FindElements(By.ClassName("mimg"));
@@ -152,7 +154,7 @@ namespace BingDownloader
 
                 case 5:
 
-                    //// find the searchBox
+                    //// find the download button (fail)
                     //List<IWebElement> elements = Chrome.FindElements(By.ClassName("text")).ToList();
 
                     //if (ListHelper.HasOneOrMoreItems(elements))
@@ -178,6 +180,15 @@ namespace BingDownloader
 
                 case 7:
 
+                    // location for close image button for me
+                    Cursor.Position = closeDownloadsButton;
+                    MouseHelper.MouseClick(Cursor.Position);
+
+                     // required
+                    break;
+
+                case 8:
+
                     // if there are two or more web elements
                     if (ListHelper.HasXOrMoreItems(WebElements, 2))
                     {
@@ -188,7 +199,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 8:
+                case 9:
 
                     // location for Download button for me (zoom 150%). Adjust as needed for your monitor / resolution.
                     Cursor.Position = downloadButton;
@@ -197,7 +208,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 9:
+                case 10:
 
                     // location for close image button for me
                     Cursor.Position = closeButton;
@@ -206,7 +217,16 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 10:
+                case 11:
+
+                    // location for close image button for me
+                    Cursor.Position = closeDownloadsButton;
+                    MouseHelper.MouseClick(Cursor.Position);
+
+                     // required
+                    break;
+
+                case 12:
 
                     // if there are two or more web elements
                     if (ListHelper.HasXOrMoreItems(WebElements, 3))
@@ -218,7 +238,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 11:
+                case 13:
 
                     // location for Download button for me (zoom 150%). Adjust as needed for your monitor / resolution.
                     Cursor.Position = downloadButton;
@@ -227,7 +247,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 12:
+                case 14:
 
                     // location for close image button for me
                     Cursor.Position = closeButton;
@@ -235,8 +255,17 @@ namespace BingDownloader
 
                     // required
                     break;
+                    
+                case 15:
 
-                case 13:
+                    // location for close image button for me
+                    Cursor.Position = closeDownloadsButton;
+                    MouseHelper.MouseClick(Cursor.Position);
+
+                     // required
+                    break;
+
+                case 16:
 
                     // if there are two or more web elements
                     if (ListHelper.HasXOrMoreItems(WebElements, 4))
@@ -248,7 +277,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 14:
+                case 17:
 
                     // location for Download button for me (zoom 150%). Adjust as needed for your monitor / resolution.
                     Cursor.Position = downloadButton;
@@ -257,7 +286,7 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 15:
+                case 18:
 
                     // location for close image button for me
                     Cursor.Position = closeButton;
@@ -266,13 +295,13 @@ namespace BingDownloader
                     // required
                     break;
 
-                case 16:
+                case 19:
 
                     // location for close image button for me
                     Cursor.Position = closeDownloadsButton;
                     MouseHelper.MouseClick(Cursor.Position);
 
-                    // required
+                     // required
                     break;
 
                 default:
@@ -285,6 +314,9 @@ namespace BingDownloader
                     {
                         // stop the timer
                         ProcessTimer.Stop();
+
+                        // Destroy
+                        ProcessTimer.Dispose();
 
                         // Move the images from the user's download folder to the selected Save Folder
                         MoveImages();
@@ -313,6 +345,18 @@ namespace BingDownloader
             // Reset
             Step = 0;
 
+            // guess
+            double charactersPerLine = 45;
+            double numberLines = 1;
+            double lineHeight = 24;
+            double downloadYAdjustment = DownloadYAdjustment.IntValue;
+
+            // set the number of lines
+            numberLines = Math.Floor(PromptControl.Text.Length / charactersPerLine) + 1;
+
+            // Set the Y location for the download button
+            DownloadsButtonPoint2.Text = (620 + downloadYAdjustment + (numberLines * lineHeight)).ToString();
+
             // minimize this form
             this.WindowState = FormWindowState.Minimized;
 
@@ -320,7 +364,7 @@ namespace BingDownloader
             ProcessTimer = new Timer();
 
             // Set the interval
-            ProcessTimer.Interval = 1000;
+            ProcessTimer.Interval = ShortDelay;
             ProcessTimer.Elapsed += ProcessTimer_Elapsed;
             ProcessTimer.Start();
         }
@@ -338,19 +382,22 @@ namespace BingDownloader
         {
             // Setup the Points - Adjust these as needed
             DownloadsButtonPoint.Text = "1560";
-            DownloadsButtonPoint2.Text = "700";
+            DownloadsButtonPoint2.Text = "640";
             CloseButtonPoint.Text = "1840";
             CloseButtonPoint2.Text = "184";
             CloseDownloadsPoint.Text = "1900";
             CloseDownloadsPoint2.Text = "1020";
 
+            // This value is added or subtracted to / from the DownloladPoint2 (Y location for the Download Button)
+            DownloadYAdjustment.Text = "0";
+
             // Set the Downloads Folder
             DownloadsFolderControl.Text = KnownFolders.GetPath(KnownFolder.Downloads);
 
             // Testonly while I am testing
-            OutputFolderControl.Text = "C:\\Graphics\\Shirts\\Enchanted";
-            PromptControl.Text = "Detailed Vibrant Roller Coaster Made of Colorful Candy with loops, turns and dips photorealistic cinematic artistic Add Splashes of colored sand";
-            CountControl.Text = "5";
+            OutputFolderControl.Text = "C:\\Graphics\\Shirts\\Lemon";
+            PromptControl.Text = "lemon, surrealist painting";
+            CountControl.Text = "1";
 
             // Set your ChromeDriverPath
             ChromeDriverPath = "C:\\Projects\\GitHub\\BingDownloader\\chromedriver_win32\\";

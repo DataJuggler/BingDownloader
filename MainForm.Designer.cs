@@ -43,6 +43,9 @@
             DownloadsButtonPoint2 = new DataJuggler.Win.Controls.LabelTextBoxControl();
             CloseButtonPoint2 = new DataJuggler.Win.Controls.LabelTextBoxControl();
             AbortButton = new DataJuggler.Win.Controls.Button();
+            OutOfBoostsCheckbox = new DataJuggler.Win.Controls.LabelCheckBoxControl();
+            BoostsLabel = new Label();
+            DownloadYAdjustment = new DataJuggler.Win.Controls.LabelTextBoxControl();
             SuspendLayout();
             // 
             // OutputFolderControl
@@ -212,7 +215,7 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = Color.LemonChiffon;
-            label1.Location = new Point(450, 251);
+            label1.Location = new Point(450, 239);
             label1.Name = "label1";
             label1.Size = new Size(381, 31);
             label1.TabIndex = 21;
@@ -407,12 +410,76 @@
             AbortButton.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
             AbortButton.Click += AbortButton_Click;
             // 
+            // OutOfBoostsCheckbox
+            // 
+            OutOfBoostsCheckbox.BackColor = Color.Transparent;
+            OutOfBoostsCheckbox.CheckBoxHorizontalOffSet = 0;
+            OutOfBoostsCheckbox.CheckBoxVerticalOffSet = 3;
+            OutOfBoostsCheckbox.CheckChangedListener = null;
+            OutOfBoostsCheckbox.Checked = false;
+            OutOfBoostsCheckbox.Editable = true;
+            OutOfBoostsCheckbox.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            OutOfBoostsCheckbox.LabelColor = Color.LemonChiffon;
+            OutOfBoostsCheckbox.LabelFont = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            OutOfBoostsCheckbox.LabelText = "Out of Boosts:";
+            OutOfBoostsCheckbox.LabelWidth = 260;
+            OutOfBoostsCheckbox.Location = new Point(539, 277);
+            OutOfBoostsCheckbox.Name = "OutOfBoostsCheckbox";
+            OutOfBoostsCheckbox.Size = new Size(292, 28);
+            OutOfBoostsCheckbox.TabIndex = 29;
+            OutOfBoostsCheckbox.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
+            // 
+            // BoostsLabel
+            // 
+            BoostsLabel.BackColor = Color.Transparent;
+            BoostsLabel.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            BoostsLabel.ForeColor = Color.LemonChiffon;
+            BoostsLabel.Location = new Point(353, 308);
+            BoostsLabel.Name = "BoostsLabel";
+            BoostsLabel.Size = new Size(478, 31);
+            BoostsLabel.TabIndex = 30;
+            BoostsLabel.Text = "When checked timer increases from 30 to 60 seconds.";
+            BoostsLabel.TextAlign = ContentAlignment.TopRight;
+            BoostsLabel.Visible = false;
+            // 
+            // DownloadYAdjustment
+            // 
+            DownloadYAdjustment.BackColor = Color.Transparent;
+            DownloadYAdjustment.BottomMargin = 0;
+            DownloadYAdjustment.Editable = true;
+            DownloadYAdjustment.Encrypted = false;
+            DownloadYAdjustment.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            DownloadYAdjustment.Inititialized = true;
+            DownloadYAdjustment.LabelBottomMargin = 0;
+            DownloadYAdjustment.LabelColor = Color.LemonChiffon;
+            DownloadYAdjustment.LabelFont = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            DownloadYAdjustment.LabelText = "Downloads Box:";
+            DownloadYAdjustment.LabelTopMargin = 0;
+            DownloadYAdjustment.LabelWidth = 0;
+            DownloadYAdjustment.Location = new Point(353, 357);
+            DownloadYAdjustment.MultiLine = false;
+            DownloadYAdjustment.Name = "DownloadYAdjustment";
+            DownloadYAdjustment.OnTextChangedListener = null;
+            DownloadYAdjustment.PasswordMode = false;
+            DownloadYAdjustment.ScrollBars = ScrollBars.None;
+            DownloadYAdjustment.Size = new Size(80, 32);
+            DownloadYAdjustment.TabIndex = 31;
+            DownloadYAdjustment.TextBoxBottomMargin = 0;
+            DownloadYAdjustment.TextBoxDisabledColor = Color.LightGray;
+            DownloadYAdjustment.TextBoxEditableColor = Color.White;
+            DownloadYAdjustment.TextBoxFont = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            DownloadYAdjustment.TextBoxTopMargin = 0;
+            DownloadYAdjustment.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
+            // 
             // MainForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.BlackImage;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(874, 451);
+            Controls.Add(DownloadYAdjustment);
+            Controls.Add(BoostsLabel);
+            Controls.Add(OutOfBoostsCheckbox);
             Controls.Add(AbortButton);
             Controls.Add(CloseButtonPoint2);
             Controls.Add(DownloadsButtonPoint2);
@@ -452,5 +519,8 @@
         private DataJuggler.Win.Controls.LabelTextBoxControl DownloadsButtonPoint2;
         private DataJuggler.Win.Controls.LabelTextBoxControl CloseButtonPoint2;
         private DataJuggler.Win.Controls.Button AbortButton;
+        private DataJuggler.Win.Controls.LabelCheckBoxControl OutOfBoostsCheckbox;
+        private Label BoostsLabel;
+        private DataJuggler.Win.Controls.LabelTextBoxControl DownloadYAdjustment;
     }
 }
